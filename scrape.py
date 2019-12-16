@@ -1,22 +1,30 @@
 import json
 from time import sleep
 
+import requests
 from selenium import webdriver
 
 from product import Product
 
+exhange_rate_GBP_URL = 'https://api.exchangerate-api.com/v4/latest/GBP'
+
 amazon_URL = "https://www.amazon.co.uk/"
+
+
+def get_exchange_rate():
+    response = requests.get(exhange_rate_GBP_URL)
+    return response.json()['rates']['SEK']
+
 
 # Setup browser
 options = webdriver.FirefoxOptions()
 options.add_argument('--ignore-certificate-errors')
-options.add_argument('--headless')
+# options.add_argument('--headless')
 driver = webdriver.Firefox(options=options)
 
 search_term = str(input("Search: "))
-gbp_to_sek = float(input("GBP to SEK: "))
+gbp_to_sek = get_exchange_rate()
 
-# Ask user for search term and begin the search
 driver.get(amazon_URL)
 search_element = driver.find_element_by_css_selector('#twotabsearchtextbox')
 search_element.send_keys(search_term)
@@ -43,9 +51,8 @@ def convert_string_price_to_float(price_text):
 
 while True:
 
-    # Sleep 2 second to not put to much stress on the website
+    # Sleep 0.5 seconds to not put to much stress on the website
     sleep(0.5)
-
     if page != 1:
         try:
             driver.get(driver.current_url + '&page=' + str(page))
@@ -54,6 +61,7 @@ while True:
 
     # Loop through every item in page x.
     for i in driver.find_elements_by_css_selector('.s-result-list'):
+
         counter = 0
         # For every element in page x
         for element in i.find_elements_by_css_selector('.s-result-item'):
@@ -72,7 +80,6 @@ while True:
                     Exception()
                     prev_price = price
             except:
-                print("exception")
                 should_add = False
 
             product = Product(name, price, prev_price, link)
@@ -80,9 +87,8 @@ while True:
                 products.append(product)
             counter += 1
 
-    print(page)
     page += 1
-    if page >= 13:
+    if page >= 3:
         break
 
 biggest_discount = 0.0
