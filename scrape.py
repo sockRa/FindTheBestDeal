@@ -6,14 +6,18 @@ from selenium import webdriver
 
 from product import Product
 
-exchange_rate_GBP_URL = 'https://api.exchangerate-api.com/v4/latest/GBP'
-
 amazon_URL = "https://www.amazon.co.uk/"
+exchange_rate_url = ""
 
 
-def get_exchange_rate():
-    response = requests.get(exchange_rate_GBP_URL)
-    return response.json()['rates']['SEK']
+def get_exchange_rate(user_choice_currency):
+    global exchange_rate_url
+    try:
+        exchange_rate_url = 'https://api.exchangerate-api.com/v4/latest/' + user_choice_currency
+    except:
+        Exception()
+    response = requests.get(exchange_rate_url)
+    return response.json()['rates'][user_choice_currency]
 
 
 # Setup browser
@@ -22,7 +26,8 @@ options.add_argument('--headless')
 driver = webdriver.Firefox(options=options)
 
 search_term = str(input("Search: "))
-gbp_to_sek = get_exchange_rate()
+currency = str(input("Which currency do you want?\n USD, SEK, GBP, etc \n :"))
+currency_choice = get_exchange_rate(str(currency).upper())
 
 driver.get(amazon_URL)
 search_element = driver.find_element_by_css_selector('#twotabsearchtextbox')
@@ -35,17 +40,17 @@ page = 1
 
 
 def convert_string_price_to_float(price_text):
-    price = price_text.split("£")[1]
+    product_price = price_text.split("£")[1]
     try:
-        price = price.split("\n")[0] + "." + price.split("\n")[1]
+        product_price = product_price.split("\n")[0] + "." + product_price.split("\n")[1]
     except:
         Exception()
     try:
-        price = price.split(",")[0] + price.split(",")[1]
+        product_price = product_price.split(",")[0] + product_price.split(",")[1]
     except:
         Exception()
 
-    return round(float(price) * gbp_to_sek)
+    return round(float(product_price) * currency_choice)
 
 
 while True:
@@ -86,6 +91,7 @@ while True:
                 products.append(product)
             counter += 1
 
+    print("Done scraping page " + str(page))
     page += 1
     if page >= 13:
         break
