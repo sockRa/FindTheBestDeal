@@ -9,15 +9,18 @@ from product import Product
 amazon_URL = "https://www.amazon.co.uk/"
 exchange_rate_url = ""
 
+valid_currency = ["USD", "EUR", "GBP", "SEK"]
+
 
 def get_exchange_rate(user_choice_currency):
     global exchange_rate_url
-    try:
+
+    if user_choice_currency in valid_currency:
         exchange_rate_url = 'https://api.exchangerate-api.com/v4/latest/' + user_choice_currency
-    except:
-        Exception()
-    response = requests.get(exchange_rate_url)
-    return response.json()['rates'][user_choice_currency]
+        response = requests.get(exchange_rate_url)
+        return response.json()['rates'][user_choice_currency]
+    else:
+        raise Exception("Invalid currency")
 
 
 # Setup browser
@@ -26,7 +29,7 @@ options.add_argument('--headless')
 driver = webdriver.Firefox(options=options)
 
 search_term = str(input("Search: "))
-currency = str(input("Which currency do you want?\n USD, SEK, GBP, etc \n :"))
+currency = str(input("Which currency do you want?\n USD, EUR, GBP, SEK\n :"))
 currency_choice = get_exchange_rate(str(currency).upper())
 
 driver.get(amazon_URL)
