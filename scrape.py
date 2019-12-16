@@ -6,13 +6,13 @@ from selenium import webdriver
 
 from product import Product
 
-exhange_rate_GBP_URL = 'https://api.exchangerate-api.com/v4/latest/GBP'
+exchange_rate_GBP_URL = 'https://api.exchangerate-api.com/v4/latest/GBP'
 
 amazon_URL = "https://www.amazon.co.uk/"
 
 
 def get_exchange_rate():
-    response = requests.get(exhange_rate_GBP_URL)
+    response = requests.get(exchange_rate_GBP_URL)
     return response.json()['rates']['SEK']
 
 
