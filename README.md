@@ -2,7 +2,7 @@
 
 Inspired by Kalle Hallden's blackfriday scraper. 
 
-  Setup
+  Setup:
   * Download https://github.com/mozilla/geckodriver/releases (win64)
   * Extract the exe somewhere on the computer
   * Go to 'enviroment variables' in Windows and edit the PATH.
