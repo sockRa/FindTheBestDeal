@@ -10,10 +10,10 @@ Inspired by Kalle Hallden's blackfriday scraper.
   
   Features:
   * Search amazon.co.uk for the product with the greatest discount
-  * Automatic currency exchange retrival from GBP to SEK
+  * Automatic currency exchange from GBP to USD/EUR/GBP/SEK
   * All items that are scraped are saved in 'products.json'
   
   Future updates:
   * Ability to scrape more websites
-  * Ability to change currency conversion
+  * Include shipping in the calculation
   
