@@ -96,7 +96,7 @@ while True:
 
     print("Done scraping page " + str(page))
     page += 1
-    if page >= 4:
+    if page >= 13:
         break
 
 biggest_discount = 0.0
