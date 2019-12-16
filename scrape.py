@@ -16,7 +16,7 @@ def get_exchange_rate(user_choice_currency):
     global exchange_rate_url
 
     if user_choice_currency in valid_currency:
-        exchange_rate_url = 'https://api.exchangerate-api.com/v4/latest/' + user_choice_currency
+        exchange_rate_url = 'https://api.exchangerate-api.com/v4/latest/GBP'
         response = requests.get(exchange_rate_url)
         return response.json()['rates'][user_choice_currency]
     else:
@@ -96,7 +96,7 @@ while True:
 
     print("Done scraping page " + str(page))
     page += 1
-    if page >= 13:
+    if page >= 4:
         break
 
 biggest_discount = 0.0
