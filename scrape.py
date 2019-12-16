@@ -19,7 +19,7 @@ def get_exchange_rate():
 # Setup browser
 options = webdriver.FirefoxOptions()
 options.add_argument('--ignore-certificate-errors')
-# options.add_argument('--headless')
+options.add_argument('--headless')
 driver = webdriver.Firefox(options=options)
 
 search_term = str(input("Search: "))
