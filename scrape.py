@@ -18,7 +18,6 @@ def get_exchange_rate():
 
 # Setup browser
 options = webdriver.FirefoxOptions()
-options.add_argument('--ignore-certificate-errors')
 options.add_argument('--headless')
 driver = webdriver.Firefox(options=options)
 
@@ -88,7 +87,7 @@ while True:
             counter += 1
 
     page += 1
-    if page >= 3:
+    if page >= 13:
         break
 
 biggest_discount = 0.0
