@@ -14,6 +14,7 @@ Inspired by Kalle Hallden's blackfriday scraper.
   * All items that are scraped are saved in 'products.json'
   
   Future updates:
+  * Rewrite with scrapy
   * Implement a menu
   * Ability to scrape more websites
   * Include shipping in the calculation
